@@ -1,28 +1,36 @@
 
-max_value = ''
-min_value = '9999'
-#open the txt file
-f = open('one_hundred.txt')
-for line in f:
-        if len(line) > 1:
-            list_nums = line.split()
-            for num in list_nums:
-                if num<min_value:
-                    min_value = num
-                if num>max_value:
-                    max_value = num
-                    
+#open file with f
+f = open("one_hundred.txt")
 
-f = open('one_hundred.txt')
+#split up the lines to have just numbers
+master_list = []
 for line in f:
-    if len(line) > 1:
+    if len(line) >1:
         list_nums = line.split()
-        for num in list_nums:
-            for r in range(int(min_value), int(max_value)):
-                if r != num:
-                    print(f'{r} is not present')
+        list_nums = [int(i) for i in list_nums]
+        master_list.extend(list_nums)
+f.close()
+
+#find missing numbers in the list and append into missing_numbers list
+missing_numbers = []
+for r in range(1,101):
+    if r not in master_list:
+        missing_numbers.append(r)
 
 
-print(f"{min_value}, {max_value}")
+"""
+#create a variable to print it onto a different txt fike
+output_missing = print(f"The missing numbers: {missing_numbers.sort()}")
+output_master = print(f"The numbers we had: {master_list.sort()}")
+"""
 
+
+#open the separate file and write in it
+output = open("one_hundred_sorted.txt", "w")
+output.writelines(str(missing_numbers))
+output.close()
+
+#reading the file
+with open("one_hundred_sorted.txt", "r") as read:
+    print(read.read())
 
